@@ -1,0 +1,236 @@
+const formatSection = (title, content) => {
+  return `
+    <div class="section">
+      <div class="section-title">${title}</div>
+      <div class="section-content">
+        ${content.replace(/\n/g, "<br/>")}
+      </div>
+    </div>
+  `;
+};
+
+const reportTemplate = (company, insights) => {
+  const sections = {
+    overview: "",
+    strengths: "",
+    observations: "",
+    opportunities: "",
+    aiSuggestions: "",
+    recommendations: "",
+  };
+
+  const splitText = insights.split("\n");
+
+  let currentSection = "";
+
+  splitText.forEach((line) => {
+    if (line.includes("COMPANY_OVERVIEW:")) {
+      currentSection = "overview";
+      return;
+    }
+
+    if (line.includes("BUSINESS_STRENGTHS:")) {
+      currentSection = "strengths";
+      return;
+    }
+
+    if (line.includes("WEBSITE_OBSERVATIONS:")) {
+      currentSection = "observations";
+      return;
+    }
+
+    if (line.includes("GROWTH_OPPORTUNITIES:")) {
+      currentSection = "opportunities";
+      return;
+    }
+
+    if (line.includes("AI_AUTOMATION_SUGGESTIONS:")) {
+      currentSection = "aiSuggestions";
+      return;
+    }
+
+    if (line.includes("FINAL_RECOMMENDATIONS:")) {
+      currentSection = "recommendations";
+      return;
+    }
+
+    if (currentSection) {
+      sections[currentSection] += line + "\n";
+    }
+  });
+
+  return `
+  <html>
+    <head>
+      <style>
+        body {
+          font-family: Arial, sans-serif;
+          padding: 0;
+          margin: 0;
+          background: #f3f4f6;
+          color: #111827;
+        }
+
+        .cover {
+          height: 100vh;
+          background: linear-gradient(135deg, #2563eb, #1e3a8a);
+          color: white;
+          display: flex;
+          flex-direction: column;
+          justify-content: center;
+          align-items: center;
+          text-align: center;
+          padding: 40px;
+        }
+
+        .cover h1 {
+          font-size: 52px;
+          margin-bottom: 20px;
+        }
+
+        .cover h2 {
+          font-size: 28px;
+          font-weight: normal;
+        }
+
+        .cover p {
+          margin-top: 30px;
+          font-size: 18px;
+        }
+
+        .container {
+          padding: 50px;
+        }
+
+        .score-grid {
+          display: grid;
+          grid-template-columns: repeat(2, 1fr);
+          gap: 20px;
+          margin-bottom: 40px;
+        }
+
+        .score-card {
+          background: white;
+          padding: 25px;
+          border-radius: 14px;
+          box-shadow: 0 4px 10px rgba(0,0,0,0.08);
+        }
+
+        .score-title {
+          font-size: 16px;
+          color: #6b7280;
+          margin-bottom: 10px;
+        }
+
+        .score-value {
+          font-size: 32px;
+          font-weight: bold;
+          color: #2563eb;
+        }
+
+        .section {
+          background: white;
+          padding: 30px;
+          border-radius: 14px;
+          margin-bottom: 30px;
+          box-shadow: 0 4px 10px rgba(0,0,0,0.08);
+        }
+
+        .section-title {
+          font-size: 24px;
+          font-weight: bold;
+          color: #2563eb;
+          margin-bottom: 20px;
+        }
+
+        .section-content {
+          font-size: 16px;
+          line-height: 1.8;
+          color: #374151;
+        }
+
+        .footer {
+          text-align: center;
+          padding: 30px;
+          color: #6b7280;
+          font-size: 14px;
+        }
+      </style>
+    </head>
+
+    <body>
+
+      <div class="cover">
+        <h1>AI Growth & Automation Audit</h1>
+        <h2>${company}</h2>
+        <p>
+          Prepared by SimplifIQ AI Consulting Engine
+        </p>
+      </div>
+
+      <div class="container">
+
+        <div class="score-grid">
+          <div class="score-card">
+            <div class="score-title">Growth Potential</div>
+            <div class="score-value">High</div>
+          </div>
+
+          <div class="score-card">
+            <div class="score-title">AI Readiness</div>
+            <div class="score-value">8.5/10</div>
+          </div>
+
+          <div class="score-card">
+            <div class="score-title">Automation Potential</div>
+            <div class="score-value">Strong</div>
+          </div>
+
+          <div class="score-card">
+            <div class="score-title">Digital Presence</div>
+            <div class="score-value">Excellent</div>
+          </div>
+        </div>
+
+        ${formatSection(
+          "Company Overview",
+          sections.overview
+        )}
+
+        ${formatSection(
+          "Business Strengths",
+          sections.strengths
+        )}
+
+        ${formatSection(
+          "Website Observations",
+          sections.observations
+        )}
+
+        ${formatSection(
+          "Growth Opportunities",
+          sections.opportunities
+        )}
+
+        ${formatSection(
+          "AI Automation Suggestions",
+          sections.aiSuggestions
+        )}
+
+        ${formatSection(
+          "Final Recommendations",
+          sections.recommendations
+        )}
+
+      </div>
+
+      <div class="footer">
+        Confidential AI Business Audit • Generated by SimplifIQ
+      </div>
+
+    </body>
+  </html>
+  `;
+};
+
+export default reportTemplate;

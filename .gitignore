@@ -1,0 +1,5 @@
+node_modules
+.env
+reports
+dist
+server/google-credentials.json
