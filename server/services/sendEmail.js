@@ -6,10 +6,6 @@ const sendEmail = async (to, company, pdfPath) => {
 
     console.log("Sending email to:", to);
 
-    console.log(
-      "BREVO API KEY:",
-      process.env.BREVO_SMTP_KEY
-    );
 
     console.log(
       "BREVO EMAIL:",
