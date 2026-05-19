@@ -1,84 +1,196 @@
-# SimplifIQ – AI Lead Automation System
+# SimplifIQ – AI-Powered Lead Automation System
 
-This project automates the lead follow-up process. When someone submits a form with their company details, the system automatically researches their business, generates a PDF audit report, and emails it to them — no manual work needed.
+SimplifIQ is a full-stack AI automation platform that streamlines the lead follow-up process for businesses.
 
-Built for the SimplifIQ AI Software Developer Intern Assessment.
+When a user submits their company details through the form, the system automatically:
 
----
+- Collects and validates lead information
+- Scrapes publicly available company data
+- Generates AI-powered business insights
+- Creates a professional PDF audit report
+- Sends the report through email
+- Logs lead data into Google Sheets
 
-## What it does
-
-1. User fills out a form (name, email, company, website)
-2. Backend scrapes their website to gather company info
-3. Groq AI analyzes the data and generates business insights
-4. A professional PDF report is created using Puppeteer
-5. The report is emailed to the user automatically
-6. Lead details are logged into Google Sheets
+This project was built as part of the **SimplifIQ AI Software Developer Intern Assessment**.
 
 ---
 
-## Tech Used
+# Live Demo
 
-- **Frontend** – React.js, Tailwind CSS
-- **Backend** – Node.js, Express.js
-- **AI** – Groq API (Llama 3.3 70B)
-- **Scraping** – Axios, Cheerio
-- **PDF** – Puppeteer
-- **Email** – Nodemailer (Gmail)
-- **Logging** – Google Sheets API
-
----
-
-## Folder Structure
-
-```
-simplifiq-assessment/
-├── client/        # React frontend
-└── server/
-    ├── routes/    # API endpoints
-    ├── services/  # Scraping, AI, PDF, email logic
-    ├── templates/ # PDF HTML templates
-    └── reports/   # Generated PDFs
-```
-
----
-
-## Setup
-
-**1. Clone the repo**
+Frontend:
 ```bash
-git clone <your-repo-link>
+https://your-vercel-link.vercel.app
+```
+
+Backend:
+```bash
+https://simplifiq-ai-automation.onrender.com
+```
+
+---
+
+# Features
+
+## AI Business Analysis
+Uses Groq AI (Llama 3.3 70B) to generate personalized business insights and recommendations.
+
+## Website Scraping
+Extracts publicly available company information using Axios and Cheerio.
+
+## Automated PDF Generation
+Creates professional AI-generated audit reports using Puppeteer.
+
+## Automated Email Delivery
+Sends generated reports automatically using Brevo Email API.
+
+## Google Sheets Logging
+Stores all lead information inside Google Sheets as a live lead tracker.
+
+## Fully Automated Workflow
+Entire pipeline works automatically after form submission.
+
+---
+
+# Tech Stack
+
+## Frontend
+- React.js
+- Tailwind CSS
+- Axios
+
+## Backend
+- Node.js
+- Express.js
+
+## AI
+- Groq API (Llama 3.3 70B)
+
+## Scraping
+- Axios
+- Cheerio
+
+## PDF Generation
+- Puppeteer
+- Chromium
+
+## Email Service
+- Brevo API
+
+## Database / Logging
+- Google Sheets API
+
+---
+
+# Project Workflow
+
+```text
+User Form Submission
+        ↓
+Website Scraping
+        ↓
+AI Insight Generation
+        ↓
+PDF Report Creation
+        ↓
+Email Delivery
+        ↓
+Google Sheets Logging
+```
+
+---
+
+# Folder Structure
+
+```text
+simplifiq-assessment/
+│
+├── client/
+│   ├── src/
+│   └── public/
+│
+├── server/
+│   ├── routes/
+│   ├── services/
+│   ├── templates/
+│   ├── reports/
+│   └── server.js
+│
+├── screenshots/
+├── README.md
+└── .gitignore
+```
+
+---
+
+# Installation & Setup
+
+## 1. Clone Repository
+
+```bash
+git clone <your-repository-link>
 cd simplifiq-assessment
 ```
 
-**2. Install dependencies**
+---
+
+## 2. Install Dependencies
+
+### Frontend
+
 ```bash
-cd client && npm install
-cd ../server && npm install
+cd client
+npm install
 ```
 
-**3. Create a `.env` file in the `server/` folder**
-```env
-PORT=5000
-GROQ_API_KEY=your_groq_api_key
-EMAIL_USER=your_email@gmail.com
-EMAIL_PASS=your_gmail_app_password
-```
+### Backend
 
-**4. Run the project**
 ```bash
-# In one terminal
-cd server && npm run dev
-
-# In another terminal
-cd client && npm run dev
+cd server
+npm install
 ```
 
 ---
 
-## API
+# Environment Variables
 
-`POST /api/leads`
+Create a `.env` file inside the `server/` folder.
+
+```env
+PORT=5000
+
+GROQ_API_KEY=your_groq_api_key
+
+BREVO_EMAIL=your_email@gmail.com
+BREVO_SMTP_KEY=your_brevo_api_key
+
+GOOGLE_CREDENTIALS={your_google_service_account_json}
+```
+
+---
+
+# Run Locally
+
+## Backend
+
+```bash
+cd server
+npm run dev
+```
+
+## Frontend
+
+```bash
+cd client
+npm run dev
+```
+
+---
+
+# API Endpoint
+
+## POST `/api/leads`
+
+### Request Body
 
 ```json
 {
@@ -89,41 +201,62 @@ cd client && npm run dev
 }
 ```
 
-Once this is called, the full pipeline runs automatically.
+After submission, the full automation workflow runs automatically.
 
 ---
 
-## What's in the PDF Report
+# PDF Report Includes
 
 - Company Overview
 - Business Strengths
-- Website Observations
+- Website Analysis
 - Growth Opportunities
 - AI Automation Suggestions
 - Final Recommendations
 
 ---
 
-## Bonus Features
+# Deployment
 
-- ✅ Google Sheets logging (works fully)
-- ❌ Google Drive archiving (not completed — service accounts don't get Drive storage quota by default, which caused upload failures)
+## Frontend
+- Vercel
 
----
-
-## Challenges
-
-**Scraping blocks** – Some sites return 403 errors. Fixed by adding browser-like headers and handling failures gracefully so the rest of the pipeline still runs.
-
-**AI provider issues** – Tried a few providers but ran into rate limits and deprecated models. Switched to Groq which was fast, free, and stable.
-
-**Google Drive** – The code was written but the service account didn't have storage quota. Couldn't complete this bonus feature because of that Google Cloud limitation.
+## Backend
+- Render
 
 ---
 
-## What I'd improve with more time
+# Challenges Faced
 
-- Better UI
-- Retry logic for failed steps
-- Live deployment
+## Website Scraping Restrictions
+Some websites blocked scraping requests with 403 errors. This was handled by adding browser-like request headers and fallback handling.
+
+## AI Provider Limitations
+Multiple AI providers were tested before finalizing Groq due to better speed, free-tier availability, and stable responses.
+
+## Puppeteer Deployment Issues
+Cloud deployment environments required additional Chromium configuration for successful PDF generation.
+
+## Email Delivery on Cloud
+SMTP services caused timeout issues on cloud deployment, so the project was migrated to Brevo API-based email delivery.
+
+---
+
+# Future Improvements
+
+- Better dashboard UI
+- Retry mechanism for failed workflows
+- Authentication system
+- Database integration
+- Analytics dashboard
 - Multi-page reports with charts
+- Docker deployment
+
+---
+
+
+# Author
+
+Jayesh Parihar
+
+Built for the SimplifIQ AI Software Developer Intern Assessment.
