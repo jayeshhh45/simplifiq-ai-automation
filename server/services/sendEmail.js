@@ -46,9 +46,12 @@ const sendEmail = async (to, company, pdfPath) => {
       ],
     });
 
-    console.log("Resend Response:", response);
-
-    console.log("Email sent successfully");
+    console.log("Resend Response:", response);  
+    if (response.error) {
+  console.log("Email Failed");
+} else {
+  console.log("Email sent successfully");
+}
 
   } catch (error) {
 
