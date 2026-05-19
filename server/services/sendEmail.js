@@ -1,57 +1,47 @@
-import { Resend } from "resend";
-import fs from "fs";
-
-const resend = new Resend(process.env.RESEND_API_KEY);
+import nodemailer from "nodemailer";
 
 const sendEmail = async (to, company, pdfPath) => {
   try {
 
     console.log("Sending email to:", to);
 
-    const pdfBuffer = fs.readFileSync(pdfPath);
+    const transporter = nodemailer.createTransport({
 
-    const response = await resend.emails.send({
+      host: "smtp-relay.brevo.com",
 
-      from: "lhyf4123@gmail.com",
+      port: 587,
 
-      to: [to],
+      secure: false,
+
+      auth: {
+        user: process.env.BREVO_EMAIL,
+        pass: process.env.BREVO_SMTP_KEY,
+      },
+    });
+
+    await transporter.sendMail({
+
+      from: process.env.BREVO_EMAIL,
+
+      to,
 
       subject: `AI Business Audit Report for ${company}`,
 
-      html: `
-        <div style="font-family: Arial, sans-serif; padding: 20px;">
-          
-          <h2 style="color: #2563eb;">
-            AI Business Audit Report
-          </h2>
+      text: `
+AI Business Audit Report
 
-          <p>
-            Please find attached your personalized
-            AI-generated business audit report.
-          </p>
-
-          <p>
-            Generated automatically by
-            SimplifIQ AI Automation System.
-          </p>
-
-        </div>
+Please find attached your personalized report.
       `,
 
       attachments: [
         {
           filename: `${company}_report.pdf`,
-          content: pdfBuffer,
+          path: pdfPath,
         },
       ],
     });
 
-    console.log("Resend Response:", response);  
-    if (response.error) {
-  console.log("Email Failed");
-} else {
-  console.log("Email sent successfully");
-}
+    console.log("Email sent successfully");
 
   } catch (error) {
 
