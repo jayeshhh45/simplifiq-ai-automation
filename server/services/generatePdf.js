@@ -1,13 +1,17 @@
 import puppeteer from "puppeteer";
+import chromium from "@sparticuz/chromium";
 import fs from "fs";
 import path from "path";
 import reportTemplate from "../templates/reportTemplate.js";
 
 const generatePdf = async (company, insights) => {
   try {
+
     const browser = await puppeteer.launch({
-      headless: true,
-      args: ["--no-sandbox", "--disable-setuid-sandbox"],
+      args: chromium.args,
+      defaultViewport: chromium.defaultViewport,
+      executablePath: await chromium.executablePath(),
+      headless: chromium.headless,
     });
 
     const page = await browser.newPage();
@@ -33,18 +37,14 @@ const generatePdf = async (company, insights) => {
       path: pdfPath,
       format: "A4",
       printBackground: true,
-      margin: {
-        top: "20px",
-        right: "20px",
-        bottom: "20px",
-        left: "20px",
-      },
     });
 
     await browser.close();
 
     return pdfPath;
+
   } catch (error) {
+
     console.log("PDF Error:", error);
 
     return null;
