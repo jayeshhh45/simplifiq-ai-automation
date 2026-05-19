@@ -12,7 +12,7 @@ const sendEmail = async (to, company, pdfPath) => {
 
     const response = await resend.emails.send({
 
-      from: "onboarding@resend.dev",
+      from: "lhyf4123@gmail.com",
 
       to: [to],
 
