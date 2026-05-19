@@ -19,12 +19,12 @@ This project was built as part of the **SimplifIQ AI Software Developer Intern A
 
 Frontend:
 ```bash
-https://your-vercel-link.vercel.app
+https://simplifiq-ai-automation-git-main-jayeshs-projects-192442be.vercel.app/
 ```
 
 Backend:
 ```bash
-https://simplifiq-ai-automation.onrender.com
+https://simplifiq-ai-automation.onrender.com/
 ```
 
 ---
