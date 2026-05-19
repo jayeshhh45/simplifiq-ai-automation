@@ -1,51 +1,68 @@
-import nodemailer from "nodemailer";
+import axios from "axios";
+import fs from "fs";
 
 const sendEmail = async (to, company, pdfPath) => {
   try {
 
     console.log("Sending email to:", to);
 
-    const transporter = nodemailer.createTransport({
+    const pdfBase64 = fs
+      .readFileSync(pdfPath)
+      .toString("base64");
 
-      host: "smtp-relay.brevo.com",
+    const response = await axios.post(
 
-      port: 587,
+      "https://api.brevo.com/v3/smtp/email",
 
-      secure: false,
-
-      auth: {
-        user: process.env.BREVO_EMAIL,
-        pass: process.env.BREVO_SMTP_KEY,
-      },
-    });
-
-    await transporter.sendMail({
-
-      from: process.env.BREVO_EMAIL,
-
-      to,
-
-      subject: `AI Business Audit Report for ${company}`,
-
-      text: `
-AI Business Audit Report
-
-Please find attached your personalized report.
-      `,
-
-      attachments: [
-        {
-          filename: `${company}_report.pdf`,
-          path: pdfPath,
+      {
+        sender: {
+          name: "SimplifIQ",
+          email: process.env.BREVO_EMAIL,
         },
-      ],
-    });
+
+        to: [
+          {
+            email: to,
+          },
+        ],
+
+        subject: `AI Business Audit Report for ${company}`,
+
+        htmlContent: `
+          <h2>AI Business Audit Report</h2>
+
+          <p>
+            Please find attached your personalized
+            AI-generated business audit report.
+          </p>
+        `,
+
+        attachment: [
+          {
+            name: `${company}_report.pdf`,
+            content: pdfBase64,
+          },
+        ],
+      },
+
+      {
+        headers: {
+          "api-key": process.env.BREVO_SMTP_KEY,
+          "Content-Type": "application/json",
+        },
+      }
+    );
 
     console.log("Email sent successfully");
 
+    console.log(response.data);
+
   } catch (error) {
 
-    console.log("Email Error:", error);
+    console.log(
+      "Email Error:",
+      error.response?.data || error.message
+    );
   }
 };
 
