@@ -1,0 +1,33 @@
+SimplifIQ AI Software Developer Intern Assessment – Reflection
+
+This project was built to automate the complete lead follow-up workflow using AI and backend automation.
+
+The main goal was to create a system that could:
+- capture lead information,
+- research the company automatically,
+- generate AI-powered insights,
+- create a professional PDF report,
+- send the report through email,
+- and log all lead activity into Google Sheets.
+
+During development, I worked on integrating multiple technologies together including React, Node.js, Express, Groq AI, Puppeteer, Google Sheets API, and Brevo Email API.
+
+One of the biggest challenges was handling deployment-related issues. Puppeteer required additional Chromium setup for cloud deployment, and email delivery through SMTP caused timeout issues on Render. I solved this by switching to API-based email delivery using Brevo.
+
+Another challenge was handling website scraping restrictions, since some websites blocked automated requests. To improve reliability, I added browser-like headers and fallback handling.
+
+If I had more time, I would improve:
+- dashboard UI,
+- workflow retry handling,
+- analytics,
+- database integration,
+- and multi-page PDF reports.
+
+This project helped me better understand:
+- end-to-end automation workflows,
+- API integrations,
+- AI-powered applications,
+- cloud deployment,
+- and production debugging.
+
+Overall, this project was a strong learning experience in building practical AI-driven software systems.
