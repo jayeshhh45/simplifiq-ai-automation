@@ -26,7 +26,7 @@ function App() {
       setLoading(true);
 
       const response = await axios.post(
-        "http://localhost:5000/api/leads",
+        "https://simplifiq-ai-automation.onrender.com/api/leads",
         formData
       );
 
