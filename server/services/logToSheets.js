@@ -27,14 +27,16 @@ const logToSheets = async (
       valueInputOption: "USER_ENTERED",
       requestBody: {
         values: [
-          [
-            name,
-            email,
-            company,
-            new Date().toLocaleString(),
-            status,
-          ],
-        ],
+    [
+    name,
+    email,
+    company,
+    new Date().toLocaleString("en-IN", {
+      timeZone: "Asia/Kolkata",
+    }),
+    status,
+  ],
+],
       },
     });
 
