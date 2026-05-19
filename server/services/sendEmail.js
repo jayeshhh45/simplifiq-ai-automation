@@ -9,7 +9,7 @@ const sendEmail = async (to, company, pdfPath) => {
     const pdfBuffer = fs.readFileSync(pdfPath);
 
     await resend.emails.send({
-      from: "onboarding@resend.dev",
+      from: "pariharyajayesh210@gmail.com",
       to,
       subject: `AI Business Audit Report for ${company}`,
 
